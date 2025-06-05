@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Приглашение на свадьбу</title>
+  <link rel="icon" href="icon.png">
+	<link rel="stylesheet" href="main.css">
+  <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Exile&family=Great+Vibes&family=Kapakana:wght@300..400&family=Lobster&family=Marck+Script&family=Noto+Serif+Dives+Akuru&family=Pattaya&family=Poiret+One&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">    
+
+	<script src="app.js" defer></script>
+	<script src="rain.js" defer></script>
+	<script src="date.js" defer></script>
+</head>
+<body>
+
+  <div id="background">
+    <div class="layers">
+      <div class="layers__container">
+        <div class="layers__item layer-1" style="background-image: url('layer-1.jpg');"></div>
+        <div class="layers__item layer-2" style="background-image: url('layer-2.png');"></div>
+        <div class="layers__item layer-content-3" id="content">
+          
+        </div>
+        <div class="layers__item layer-4">
+          <canvas class="rain"></canvas>
+        </div>
+        <div class="layers__item layer-5" style="background-image: url(layer-5.png);"></div>
+        <div class="layers__item layer-6" style="background-image: url(layer-6.png);"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="content">
+    <div id="music-player">
+      <svg class="icon play-icon hidden" viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#e3e3e3">
+        <path d="M400-120q-66 0-113-47t-47-113q0-66 47-113t113-47q23 0 42.5 5.5T480-418v-422h240v160H560v400q0 66-47 113t-113 47Z"/>
+      </svg>
+      <svg class="icon pause-icon" viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#e3e3e3">
+        <path d="M400-120q-66 0-113-47t-47-113q0-66 47-113t113-47q23 0 42.5 5.5T480-418v-422h240v160H560v400q0 66-47 113t-113 47Z"/>
+      </svg>
+    </div>
+
+
+    <audio id="audio" loop autoplay>
+      <source src="kelibdi.mp3" type="audio/mpeg">
+    </audio>
+        
+    <script>
+       const musicPlayer = document.getElementById('music-player');
+  const audio = document.getElementById('audio');
+  const playIcon = document.querySelector('.play-icon');
+  const pauseIcon = document.querySelector('.pause-icon');
+  let lastScrollPosition = 0;
+  let isHidden = false;
+  let audioStarted = false;
+
+  function tryPlayAudio() {
+    if (!audioStarted) {
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          playIcon.classList.add('hidden');
+          pauseIcon.classList.remove('hidden');
+        }).catch(() => {
+          playIcon.classList.remove('hidden');
+          pauseIcon.classList.add('hidden');
+        });
+      }
+      audioStarted = true;
+    }
+  }
+
+  // Автовоспроизведение на десктопе
+  document.addEventListener('DOMContentLoaded', function () {
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (!isMobile) {
+      tryPlayAudio();
+    }
+  });
+
+  // Запуск аудио при первом взаимодействии пользователя (для мобильных)
+  ['click', 'touchstart', 'scroll'].forEach(event => {
+    window.addEventListener(event, tryPlayAudio, { once: true });
+  });
+
+  function handleScroll() {
+    const currentScrollPosition = window.pageYOffset;
+    const firstScreenHeight = window.innerHeight;
+
+    if (currentScrollPosition > lastScrollPosition) {
+      if (currentScrollPosition > firstScreenHeight * 0.01 && !isHidden) {
+        musicPlayer.classList.add('hidden');
+        isHidden = true;
+      }
+    } else {
+      if (currentScrollPosition < firstScreenHeight * 0.01 && isHidden) {
+        musicPlayer.classList.remove('hidden');
+        isHidden = false;
+      }
+    }
+
+    lastScrollPosition = currentScrollPosition;
+  }
+
+  musicPlayer.addEventListener('click', function () {
+    if (audio.paused) {
+      audio.play();
+      playIcon.classList.add('hidden');
+      pauseIcon.classList.remove('hidden');
+    } else {
+      audio.pause();
+      playIcon.classList.remove('hidden');
+      pauseIcon.classList.add('hidden');
+    }
+  });
+
+  window.addEventListener('load', handleScroll);
+  window.addEventListener('scroll', handleScroll);
+  window.addEventListener('resize', handleScroll);
+    </script>
+
+    <div class="main">  
+      <div class="data">26·07·2025</div>
+      <div class="abu">Абдалиев Абdadубакир</div> 
+      <div class="s">&</div>
+      <div class="sar">Расулова Сарвиноз</div>
+      <div class="horizontal-line"></div>
+      <div class="contry">Ростов-на-Дону</div>
+    </div>  
+
+    <div class="invite reveal">
+      <div class="invite">
+        <h1 class="header_invite">ПРИГЛАШЕНИЕ</h1>
+        <div class="horizontal-line1"></div>
+        <p class="invite__header">Дорогие друзья!</p>
+        <p class="invite__headers">Судьба подарила нам чудо — встречу друг друга. И теперь мы хотим, чтобы наш самый важный день стал по-настоящему волшебным! Приглашаем вас на нашу свадьбу — праздник, где любовь, радость и счастье создадут историю, которую мы будем вспоминать всю жизнь.</p>
+        <p class="invite__headers">Ваше присутствие сделает этот день совершенным!</p>
+        <p class="invite__header">Ждём вас, чтобы вместе начать эту прекрасную главу нашей жизни.</p>
+      </div>
+    </div>
+
+    <div class="program reveal">
+      <div class="program">
+        <div class="pro">ПРОГРАММА ДНЯ</div>
+        <div class="horizontal-line11"></div>
+        <div class="date">26 июля 2025</div>
+        <div class="sub">суббота</div>
+        <div class="event-line">
+          <span class="event-time">17:00</span>
+          <span class="event-separator"></span>
+          <span class="event-info">Сбор гостей в ресторане, праздничный фуршет</span>
+        </div>
+        <a href="https://yandex.ru/maps/39/rostov-na-donu/?ll=39.704331%2C47.262079&mode=poi&poi%5Bpoint%5D=39.703452%2C47.262515&poi%5Buri%5D=ymapsbm1%3A%2F%2Forg%3Foid%3D1124555096&z=18.76" class="button">Подъездная ул., 55, Ростов-на-Дону</a>
+      </div>
+    </div> 
+
+    <div class="container reveal">
+      <div class="container">
+        <div class="text">До начала свадьбы</div>
+        <div class="counter">
+          <span class="time-block">
+            <div id="s1" class="digit">00</div>
+            <div class="label">Дней</div>
+          </span>
+          <span class="separator">:</span>
+          <span class="time-block">
+            <div id="s2" class="digit">00</div>
+            <div class="label">Часов</div>
+          </span>
+          <span class="separator">:</span>
+          <span class="time-block">
+            <div id="s3" class="digit">00</div>
+            <div class="label">Минут</div>
+          </span>
+          <span class="separator">:</span>
+          <span class="time-block">
+            <div id="s4" class="digit">00</div>
+            <div class="label">Секунд</div>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cer reveal">
+      <div class="cer">
+        <div class="svad">СВАДЕБНЫЙ УЖИН</div>
+        <div class="res">Ресторан Ривьера</div>
+        <div class="adress">Подъездная ул·, 55, Ростов-на-Дону</div>
+      </div>
+    </div> 
+
+    <div class="karta reveal">
+      <div class="karta" style="display: flex; justify-content: center; margin: 0 auto; max-width: 1280px; margin-top: calc(var(--index) * 1.5);"><script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Ab554f5742cfdb6e3e16957d2d43fa5b6d25916bd24b53ad124836a7ca40476b7&amp;width=1280&amp;height=444&amp;lang=ru_RU&amp;scroll=true"></script></div>
+    </div> 
+
+
+    <script>
+      function revealOnScroll() {
+      const reveals = document.querySelectorAll('.reveal');
+      const windowHeight = window.innerHeight
+      reveals.forEach(el => {
+        const elementTop = el.getBoundingClientRect().top;
+        const visiblePoint = 100
+        if (elementTop < windowHeight - visiblePoint) {
+          el.classList.add('active');
+        }
+      });
+    }
+      
+      window.addEventListener('scroll', revealOnScroll);
+      window.addEventListener('load', revealOnScroll);
+    </script>
+
+  </div>
+
+</body>
+</html>
